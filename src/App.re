@@ -1,35 +1,22 @@
-/* State declaration */
-type state = {
-  count: int,
-  show: bool,
-};
+type state = {selected: string};
 
-/* Action declaration */
 type action =
-  | Click
-  | Toggle;
+  | SetSelected(string);
+
+let reducer = (_, action) =>
+  switch (action) {
+  | SetSelected(selected) => {selected: selected}
+  };
 
 [@react.component]
 let make = () => {
-  let (state, dispatch) =
-    React.useReducer(
-      (state, action) =>
-        switch (action) {
-        | Click => {...state, count: state.count + 1}
-        | Toggle => {...state, show: !state.show}
-        },
-      {count: 0, show: true},
-    );
+  let (state, dispatch) = React.useReducer(reducer, {selected: ""});
 
-  let message =
-    "You've clicked this " ++ string_of_int(state.count) ++ " times(s)";
   <div>
-    <button onClick={_event => dispatch(Click)}>
-      {ReasonReact.string(message)}
-    </button>
-    <button onClick={_event => dispatch(Toggle)}>
-      {ReasonReact.string("Toggle greeting")}
-    </button>
-    {state.show ? ReasonReact.string("Hell0!") : ReasonReact.null}
+    <Dropdown
+      selected={state.selected}
+      options=[|"milk", "bananas", "oatmeal", "raisins"|]
+      selectOption={selected => dispatch(SetSelected(selected))}
+    />
   </div>;
 };
