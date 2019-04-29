@@ -1,8 +1,9 @@
 open Webapi.Dom;
 
 let handleClickOutside = (domElement: Dom.element, e: Dom.mouseEvent, fn) => {
-  let el = MouseEvent.currentTarget(e)->EventTarget.unsafeAsElement;
-  Element.contains(domElement, el) ? fn(e) : ();
+  let targetElement = MouseEvent.target(e) |> EventTarget.unsafeAsElement;
+
+  !(domElement |> Element.contains(targetElement)) ? fn(e) : ();
 };
 
 let useClickOutside = (onClickOutside: Dom.mouseEvent => unit) => {

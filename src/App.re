@@ -13,6 +13,7 @@ let make = () => {
   let (state, dispatch) = React.useReducer(reducer, {selected: ""});
 
   <div>
+    <h1> {ReasonReact.string("Click outside demo")} </h1>
     <Dropdown
       selected={state.selected}
       options=[|"milk", "bananas", "oatmeal", "raisins"|]

@@ -1,3 +1,5 @@
+open ClickOutside;
+
 module Styles = {
   open Css;
 
@@ -44,14 +46,16 @@ let reducer = (state, action) => {
 let make =
     (~selected="", ~options: array(string), ~selectOption: string => unit) => {
   let (state, dispatch) = React.useReducer(reducer, {isOpen: false});
+  let dropdownRef = useClickOutside(_ => dispatch(Close));
 
-  <div className=Styles.dropdown>
+  <div className=Styles.dropdown ref={ReactDOMRe.Ref.domRef(dropdownRef)}>
     <div onClick={_ => dispatch(Toggle)} className=Styles.dropdownButton>
       {ReasonReact.string(selected != "" ? selected : "Select value")}
     </div>
     {state.isOpen
        ? <div className=Styles.optionsContainer>
-           <div className=Styles.options>
+           <div
+             className=Styles.options >
              {options->Belt.Array.mapWithIndex((index, item) =>
                 <div
                   key={string_of_int(index)}
