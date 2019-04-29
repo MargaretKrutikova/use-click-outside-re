@@ -21,7 +21,6 @@ let useClickOutside = (onClickOutside: Dom.mouseEvent => unit) => {
 
   React.useEffect0(() => {
     Document.addMouseDownEventListener(handleMouseDown, document);
-    // cleanup - unsubscribe on umnount.
     Some(
       () => Document.removeMouseDownEventListener(handleMouseDown, document),
     );
