@@ -15,7 +15,7 @@ open ClickOutside;
 [@react.component]
 let make = () => {
   let handleClickOutside = _ => {
-    Js.log("Click outside detcted");
+    Js.log("Click outside detected");
   };
   let divRef = useClickOutside(handleClickOutside);
 
